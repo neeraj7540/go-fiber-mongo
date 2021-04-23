@@ -28,6 +28,8 @@ func main() {
 
 	app.Get("/api/users", controllers.GetAllUser)
 	app.Post("/api/user", controllers.CreateUser)
+	app.Get("/api/user/:id", controllers.GetUserByID)
+	app.Patch("/api/user/:id", controllers.UpdateUser)
     
 
     app.Listen(":3000")

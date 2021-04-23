@@ -11,6 +11,7 @@ type User struct {
 	Name string `json:"name" bson:"name`
 	Address string `json:"address bson:"address"` 
 	Description string `json:"description" bson:"description"`
+	Status             bool   `json:"Status" bson:"Status"`
 }
 
 //Create User is a wrapper that creates a new user entry

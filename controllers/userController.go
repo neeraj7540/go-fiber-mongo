@@ -62,3 +62,60 @@ func CreateUser(ctx *fiber.Ctx) {
 		"user":user,
 	})
 }
+
+//GetUserID
+
+func GetUserByID(ctx *fiber.Ctx) {
+	id := ctx.Params("id")
+
+	user := &models.User{}
+	collection := mgm.Coll(user)
+	err := collection.FindByID(id,user)
+	if err != nil {
+		ctx.Status(404).JSON(fiber.Map{
+			"ok":    false,
+			"error": "user not found.",
+		})
+		return
+	}
+
+	ctx.JSON(fiber.Map{
+		"ok":   true,
+		"todo": user,
+	})
+}
+
+//Upate User
+
+func UpdateUser(ctx *fiber.Ctx) {
+	id := ctx.Params("id")
+
+	user := &models.User{}
+	collection := mgm.Coll(user)
+
+	err := collection.FindByID(id, user)
+	if err != nil {
+		ctx.Status(404).JSON(fiber.Map{
+			"ok":    false,
+			"error": "User not found.",
+		})
+		return
+	}
+
+	user.Status  =! user.Status 
+
+	err = collection.Update(user)
+	if err != nil {
+		ctx.Status(500).JSON(fiber.Map{
+			"ok":    false,
+			"error": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(fiber.Map{
+		"ok":   true,
+		"user": user,
+	})
+}
+
